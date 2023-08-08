@@ -98,8 +98,8 @@ class Client {
             let res = await axios.post(this.THREAD_URL, payload, {
                 headers: { ...this.defaultHeaders, 'X-Fb-Friendly-Name': 'BarcelonaProfileThreadsTabQuery' },
             });
-            console.log('Threads: ', res);
-            return res;
+            console.log('Threads: ', res.data);
+            return {statusCode: res.status, data: res.data};
         }
         catch {
             return {
@@ -120,8 +120,8 @@ class Client {
                 headers: { ...this.defaultHeaders, 'X-FB-LSD': this.apiToken, 'X-Fb-Friendly-Name': 'BarcelonaProfileRootQuery' },
             });
 
-            console.log('User: ', res);
-            return res;
+            console.log('User: ', res.data);
+            return {statusCode: res.status, data: res.data};
         }
         catch {
             return {
@@ -143,7 +143,7 @@ class Client {
             });
 
             console.log('User Replies: ', res.data);
-            return res;
+            return {statusCode: res.status, data: res.data};
         }
         catch {
             return {
@@ -165,7 +165,7 @@ class Client {
             });
 
             console.log('Thread: ', res.data);
-            return res;
+            return {statusCode: res.status, data: res.data};
         }
         catch {
             return {
@@ -187,7 +187,7 @@ class Client {
             });
 
             console.log('Thread Likers: ', res.data);
-            return res;
+            return {statusCode: res.status, data: res.data};
         }
         catch {
             return {
