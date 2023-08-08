@@ -16,7 +16,7 @@ app
         res.send(response);
     })
     .get('/thread', async (req, res) => {
-        const threadId = req.params;
+        const threadId = req.query.threadId;
         const response = await client.getThread(threadId);
         res.send(response);
     })
@@ -25,7 +25,7 @@ app
         res.send(response);
     })
     .get('/threadLikers', async (req, res) => {
-        const threadId = req.params;
+        const threadId = req.query.threadId;
         const response = await client.getThreadLikers(threadId);
         res.send(response);
     });

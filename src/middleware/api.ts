@@ -23,23 +23,10 @@ class Client {
 
     constructor() {
         this.THREAD_URL = THREAD_API_URL;
-        this.username = "instagram"; 
+        this.username = "instagram";
 
-        this.apiToken = '';
-        this.userId = this.getUserId();
-
-        this.defaultHeaders = {
-            'Authority': 'www.threads.net',
-            'Accept': '*/*',
-            'Accept-Language': 'en-US,en;q=0.9',
-            'Cache-Control': 'no-cache',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Origin': 'https://www.threads.net',
-            'Pragma': 'no-cache',
-            'Sec-Fetch-Site': 'same-origin',
-            'X-ASBD-ID': X_ASBD_ID,
-            'X-IG-App-ID': X_IG_APP_ID,
-        }
+        this.apiToken = "";
+        this.userId = "";
 
         this.fetchHeaders = {
             'Authority': 'www.threads.net',
@@ -58,6 +45,29 @@ class Client {
             'User-Agent': (
                 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6)AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1.2 Safari/605.1.15'
             ),
+        }
+
+        this.defaultHeaders = {}
+
+        this.init();
+    }
+
+    async init() {
+        this.apiToken = '';
+        this.userId = await this.getUserId();
+
+        this.defaultHeaders = {
+            'Authority': 'www.threads.net',
+            'Accept': '*/*',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Cache-Control': 'no-cache',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Origin': 'https://www.threads.net',
+            'Pragma': 'no-cache',
+            'Sec-Fetch-Site': 'same-origin',
+            'X-ASBD-ID': X_ASBD_ID,
+            'X-IG-App-ID': X_IG_APP_ID,
+            'X-FB-LSD': this.apiToken
         }
     }
 
@@ -117,7 +127,7 @@ class Client {
                 "doc_id": GET_USER_DOC_ID
             }
             let res = await axios.post(this.THREAD_URL, payload, {
-                headers: { ...this.defaultHeaders, 'X-FB-LSD': this.apiToken, 'X-Fb-Friendly-Name': 'BarcelonaProfileRootQuery' },
+                headers: { ...this.defaultHeaders, 'X-Fb-Friendly-Name': 'BarcelonaProfileRootQuery' },
             });
 
             console.log('User: ', res.data);
@@ -139,7 +149,7 @@ class Client {
                 "doc_id": GET_USER_REPLIES_DOC_ID
             }
             let res = await axios.post(this.THREAD_URL, payload, {
-                headers: { ...this.defaultHeaders, 'X-FB-LSD': this.apiToken, 'X-Fb-Friendly-Name': 'BarcelonaProfileRepliesTabQuery' },
+                headers: { ...this.defaultHeaders, 'X-Fb-Friendly-Name': 'BarcelonaProfileRepliesTabQuery' },
             });
 
             console.log('User Replies: ', res.data);
@@ -161,7 +171,7 @@ class Client {
                 "doc_id": GET_POST_DOC_ID
             }
             let res = await axios.post(this.THREAD_URL, payload, {
-                headers: { ...this.defaultHeaders, 'X-FB-LSD': this.apiToken, 'X-Fb-Friendly-Name': 'BarcelonaPostPageQuery' },
+                headers: { ...this.defaultHeaders, 'X-Fb-Friendly-Name': 'BarcelonaPostPageQuery' },
             });
 
             console.log('Thread: ', res.data);
@@ -183,7 +193,7 @@ class Client {
                 "doc_id": GET_POST_LIKERS_DOC_ID
             }
             let res = await axios.post(this.THREAD_URL, payload, {
-                headers: { ...this.defaultHeaders, 'X-FB-LSD': this.apiToken },
+                headers: { ...this.defaultHeaders },
             });
 
             console.log('Thread Likers: ', res.data);
